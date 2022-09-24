@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreingId(role_id)->constrained();
+            $table->foreignId('role_id')->constrained();
             //Espacio para atributos de paciente y nutricionista.
         });
     }
