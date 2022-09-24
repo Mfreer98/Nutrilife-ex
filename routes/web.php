@@ -29,16 +29,16 @@ Route::middleware([
 });
 
 
-// Route::group(['middleware'=> 'auth'], function(){
-//     Route::group(['middleware' => 'role:paciente', 'prefix' => 'paciente', 'as' => 'paciente.', function(){
-//         Route::resource('dashboard', \app\Http\Controllers\Paciente\PacienteController::class);
-//     }]);
+Route::group(['middleware'=> 'auth'], function(){
+    Route::group(['middleware' => 'role:paciente', 'prefix' => 'paciente', 'as' => 'paciente.', function(){
+        Route::resource('dashboard', \app\Http\Controllers\Paciente\PacienteController::class);
+    }]);
 
-//     Route::group(['middleware' => 'role:nutricionista', 'prefix' => 'nutricionista', 'as' => 'nutricionista.', function(){
-//         Route::resource('dashboard', \app\Http\Controllers\Paciente\NutricionistaController::class);
-//     }]);
+    Route::group(['middleware' => 'role:nutricionista', 'prefix' => 'nutricionista', 'as' => 'nutricionista.', function(){
+        Route::resource('dashboard', \app\Http\Controllers\Paciente\NutricionistaController::class);
+    }]);
 
-//     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.', function(){
-//         Route::resource('dashboard', \app\Http\Controllers\Paciente\AdminController::class);
-//     }]);
-// });
+    Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.', function(){
+        Route::resource('dashboard', \app\Http\Controllers\Paciente\AdminController::class);
+    }]);
+});
