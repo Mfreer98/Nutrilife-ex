@@ -31,7 +31,7 @@
 
             <div class="mt-4">
                 
-                <x-jet-input id="role" class="block mt-1 w-full invisible " type="text" name="role" :value="1" />
+                <x-jet-input id="role" class="block mt-1 w-full invisible " type="text" name="role" :value="2" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())

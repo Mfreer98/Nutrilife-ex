@@ -15,11 +15,12 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-       User::create([
+        $admin =[
             'name' => 'SuperUser',
             'email' =>'admin@nutrilife.com',
-            'password' =>'globales',
+            'password' =>bcrypt('globales'),
             'role_id' => '1'
-       ]);
+        ];
+       User::create($admin);
     }
 }
