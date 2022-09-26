@@ -1,7 +1,10 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+        <a href="#" class="flex items-center">
+                    <img src="{{ asset('img/Nutrilife.png') }}" class="mr-3 h-12" alt="Nutilife Logo">
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Nutrilife</span>
+                </a>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

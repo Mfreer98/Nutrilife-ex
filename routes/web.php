@@ -18,28 +18,66 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+//     'role:admin'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('roles.admin.index');
+//     })->name('dashboard');
+// });
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+//     'role:Paciente'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('roles.paciente.index');
+//     })->name('dashboard');
+// });
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-    'role:admin'
+    
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        if(auth()->user()->role_id == 1){
+            return redirect('/admin');
+        }
+        else{
+            if(auth()->user()->role_id == 2){
+                return view('roles.paciente.index');
+            }
+            else{
+                if(auth()->user()->role_id == 3){
+                    return view('roles.nutricionista.index');
+                }
+            }
+        }
     })->name('dashboard');
 });
 
+Route::get('/registernutri', function () {
+    return view('auth.registernutri');
+})->name('registerNutri');
 
-Route::group(['middleware'=> 'auth'], function(){
-    Route::group(['middleware' => 'role:paciente', 'prefix' => 'paciente', 'as' => 'paciente.'], function(){
-        Route::resource('dashboard', \app\Http\Controllers\Paciente\PacienteController::class);
-    });
 
-    Route::group(['middleware' => 'role:nutricionista', 'prefix' => 'nutricionista', 'as' => 'nutricionista.'], function(){
-        Route::resource('dashboard', \app\Http\Controllers\Paciente\NutricionistaController::class);
-    });
+// Route::group(['middleware'=> 'auth'], function(){
+//     Route::group(['middleware' => 'role:paciente', 'prefix' => 'paciente', 'as' => 'paciente.'], function(){
+//         Route::resource('dashboard', \app\Http\Controllers\Paciente\PacienteController::class);
+//     });
 
-    Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function(){
-        Route::resource('dashboard', \app\Http\Controllers\Paciente\AdminController::class);
-    });
-});
+//     Route::group(['middleware' => 'role:nutricionista', 'prefix' => 'nutricionista', 'as' => 'nutricionista.'], function(){
+//         Route::resource('dashboard', \app\Http\Controllers\Paciente\NutricionistaController::class);
+//     });
+
+//     Route::group(['middleware' => 'role:admin', 'prefix' => 'admin', 'as' => 'admin.'], function(){
+//         Route::resource('dashboard', \app\Http\Controllers\Paciente\AdminController::class);
+//     });
+// });
