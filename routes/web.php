@@ -61,6 +61,15 @@ Route::middleware([
             }
         }
     })->name('dashboard');
+
+    Route::get('/subscription',function(){
+        if(auth()->user()->role_id == 3){
+            return view('roles.nutricionista.subscription');
+        }
+        else{
+            return '403';
+        }
+    })->name('subscription');
 });
 
 Route::get('/registernutri', function () {
