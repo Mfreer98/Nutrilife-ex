@@ -70,6 +70,15 @@ Route::middleware([
             return '403';
         }
     })->name('subscription');
+
+    Route::get('/chat',function(){
+        if(auth()->user()->role_id == 3){
+            return redirect('/chatify');
+        }
+        else{
+            return '403';
+        }
+    })->name('chat');
 });
 
 Route::get('/registernutri', function () {

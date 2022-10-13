@@ -23,6 +23,11 @@
                             {{ __('Subscription') }}
                         </x-jet-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('chat') }}" :active="request()->routeIs('chat')">
+                            {{ __('Chat') }}
+                        </x-jet-nav-link>
+                    </div>
                 @endif
                 
                 
