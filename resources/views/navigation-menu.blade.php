@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-jet-application-mark class="block h-9 w-auto" />
-                    </a>
+                <a href="https://flowbite.com/" class="flex items-center">
+                    <img src="{{ asset('img/Nutrilife.png') }}" class="mr-3 h-12" alt="Nutilife Logo">
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Nutrilife</span>
+                </a>
                 </div>
 
                 <!-- Navigation Links -->
@@ -26,6 +27,21 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('chat') }}" :active="request()->routeIs('chat')">
                             {{ __('Chat') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Dietas') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Pacientes') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Recetas') }}
                         </x-jet-nav-link>
                     </div>
                 @endif

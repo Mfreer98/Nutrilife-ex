@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Laravel\Jetstream\Jetstream;
 
 class UserController extends Controller
 {
+    use PasswordValidationRules;
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('roles.admin.index');
+        //
+        if (auth()->user()->role_id == 1){
+            $users= User::all();
+            return view('roles.admin.users.index', compact('users'));
+        }else {
+            return '<h5>FORBIDDEN</h5>';
+        }
     }
 
     /**
@@ -25,6 +39,11 @@ class UserController extends Controller
     public function create()
     {
         //
+        if (auth()->user()->role_id == 1){
+            return view('roles.admin.users.create');
+        }else {
+            return '<h5>FORBIDDEN</h5>';
+        }
     }
 
     /**
@@ -36,6 +55,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => $this->passwordRules(),
+        ]);
+        $user = User::create(
+            $request->all()
+        );
+        return redirect()->route('roles.admin.users.index');
     }
 
     /**
@@ -44,9 +72,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
+        return "troleado";
     }
 
     /**
@@ -55,9 +84,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
         //
+        
+        if (auth()->user()->role_id == 1){
+            return view('roles.admin.users.edit', compact('user'));
+        }else {
+            return '<h5>FORBIDDEN</h5>';
+        }
     }
 
     /**
@@ -67,9 +102,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
         //
+        
+        $user->update($request->all());
+        return redirect()->route('roles.admin.users.index')->with('message','El usuario fue editado con exito!');
+        
     }
 
     /**
@@ -78,8 +117,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
+        $user->delete();
+        return redirect()->route('roles.admin.users.index')->with('message','El usuario fue editado con exito!');
     }
 }

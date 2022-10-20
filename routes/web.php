@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,23 +47,21 @@ Route::middleware([
     
 ])->group(function () {
     Route::get('/dashboard', function () {
-        if(auth()->user()->role_id == 1){
-            return redirect('/admin');
-        }
-        else{
-            if(auth()->user()->role_id == 2){
+        if (auth()->user()->role_id == 1) {
+            return view('roles.admin.index');
+        }else {
+            if (auth()->user()->role_id == 2) {
                 return view('roles.paciente.index');
-            }
-            else{
-                if(auth()->user()->role_id == 3){
+            }else {
+                if (auth()->user()->role_id == 3) {
                     return view('roles.nutricionista.index');
                 }
             }
         }
     })->name('dashboard');
 
-    Route::get('/subscription',function(){
-        if(auth()->user()->role_id == 3){
+    Route::get('/subscription', function () {
+        if (auth()->user()->role_id == 3) {
             return view('roles.nutricionista.subscription');
         }
         else{
@@ -72,14 +70,21 @@ Route::middleware([
     })->name('subscription');
 
     Route::get('/chat',function(){
-        if(auth()->user()->role_id == 3){
+        if(auth()->user()->role_id == 3 ||auth()->user()->role_id == 2||auth()->user()->role_id == 1){
             return redirect('/chatify');
         }
         else{
-            return '403';
+            return 'FORBIDDEN';
         }
     })->name('chat');
+
+    
+    
+
+    Route::resource('admin/users', UserController::class)->names('roles.admin.users');
+    
 });
+
 
 Route::get('/registernutri', function () {
     return view('auth.registernutri');

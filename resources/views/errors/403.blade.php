@@ -1,16 +1,11 @@
-@extends('errors.layout')
+@extends('errors::illustrated-layout')
 
-@php
-  $error_number = 403;
-@endphp
+@section('code', '403')
+@section('title', __('Forbiden'))
 
-@section('title')
-  Forbidden.
+@section('image')
+    <div style="background-image: url({{ asset('/svg/403.svg') }});" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
+    </div>
 @endsection
 
-@section('description')
-  @php
-    $default_error_message = "Please <a href='javascript:history.back()''>go back</a> or return to <a href='".url('')."'>our homepage</a>.";
-  @endphp
-  {!! isset($exception)? ($exception->getMessage()?e($exception->getMessage()):$default_error_message): $default_error_message !!}
-@endsection
+@section('message', __('Sorry, the page you are looking for could not be found.'))

@@ -1,5 +1,8 @@
 @include('Chatify::layouts.headLinks')
-@livewire('navigation-menu')
+@if (Auth::user()->role_id == 3 || Auth::user()->role_id == 2)
+    @livewire('navigation-menu')
+@endif
+
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
