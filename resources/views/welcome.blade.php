@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Scripts -->
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="resources/css/app.css">
     <!-- @vite(['resources/css/app.css', 'resources/js/app.js']) -->
 
     <!-- Styles -->
@@ -284,7 +284,7 @@
 
 
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-    <script src="/js/app.js"></script>
+    <script src="resources/js/app.js"></script>
 </body>
 
 </html>
