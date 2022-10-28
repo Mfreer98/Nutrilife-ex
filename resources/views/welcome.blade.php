@@ -10,9 +10,9 @@
     @extends('main')
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
+    <!-- <link rel="stylesheet" href="http://nutrilife-globales.herokuapp.com/build/assets/app.2528a834.css" /><script type="module" src="http://nutrilife-globales.herokuapp.com/build/assets/app.f10bc5fc.js"></script> -->
     <!-- Scripts -->
-    <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('build/assets/app.2528a834.css') }}">
     <!-- @vite(['resources/css/app.css', 'resources/js/app.js']) -->
 
     <!-- Styles -->
@@ -284,7 +284,7 @@
 
 
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-    <script src="{{ secure_asset('js/app.js') }}"></script>
+    <script src="{{ secure_asset('build/assets/app.f10bc5fc.js') }}"></script>
 </body>
 
 </html>
