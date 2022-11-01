@@ -15,6 +15,8 @@ class Food extends Model
         'protein',
         'fat',
         'calories',
+        'sugar',
+        'sodium',
         'is_active'
     ];
 }

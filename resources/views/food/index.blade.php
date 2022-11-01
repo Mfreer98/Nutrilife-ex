@@ -61,6 +61,13 @@
                     <th scope="col" class="py-3 px-6">
                         Grasa
                     </th>
+                    <th scope="col" class="py-3 px-6">
+                        Azucar
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Sodio
+                    </th>
+                </tr>
                 </tr>
             </thead>
 
@@ -75,7 +82,7 @@
                     </th>
 
                     <td class="py-4 px-6">
-                        {{$food->calories}}cal
+                        {{$food->calories}} cal
                     </td>
                     <td class="py-4 px-6">
                         {{$food->protein}}g
@@ -86,8 +93,15 @@
                     <td class="py-4 px-6">
                         {{$food->fat}}g
                     </td>
+                    <td class="py-4 px-6">
+                        {{$food->sugar}}g
+                    </td>
+                    <td class="py-4 px-6">
+                        {{$food->sodium}}g
+                    </td>
                     <td class="flex  py-3 px-6 space-x-4">
-                        <a href="{{route('food.edit',$food)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <a href="{{route('food.edit',$food)}}"
+                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
 
                         <form action="{{route('food.destroy',$food)}}" method="POST">
 

@@ -21,8 +21,7 @@ class FoodController extends Controller
         if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
             $foods = Food::all();
             return view('food.index', compact('foods'));
-        }
-        else {
+        } else {
             return '<h5>FORBIDDEN</h5>';
         }
     }
@@ -37,8 +36,7 @@ class FoodController extends Controller
         //
         if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
             return view('food.create');
-        }
-        else {
+        } else {
             return '<h5>FORBIDDEN</h5>';
         }
     }
@@ -58,8 +56,7 @@ class FoodController extends Controller
             $filename = $request->name . '.' . $file->extension();
             $file->move(public_path('img'), $filename);
 
-        }
-        else {
+        } else {
             $file = "Imagen nula";
         }
 
@@ -70,6 +67,8 @@ class FoodController extends Controller
             'protein' => $request->protein,
             'fat' => $request->fat,
             'calories' => $request->calories,
+            'sugar' => $request->sugar,
+            'sodium' => $request->sodium,
             'is_active' => 1,
         ]);
         return redirect()->route('food.index');
@@ -99,8 +98,7 @@ class FoodController extends Controller
 
         if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
             return view('food.edit', compact('food'));
-        }
-        else {
+        } else {
             return '<h5>FORBIDDEN</h5>';
         }
     }
