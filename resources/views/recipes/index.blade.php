@@ -12,7 +12,7 @@
 @section('title', 'Users')
 
 @section('content_header')
-<h1>Comidas</h1>
+<h1>Recetas</h1>
 @stop
 
 @section('content')
@@ -32,11 +32,11 @@
 </div>
 @endif
 <div class="py-4 px-4">
-    <a href="{{ route('food.create') }}">
+    <a href="{{ route('recipes.create') }}">
         <button type="button"
             class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
             <i class="fas fa-fw fa-plus"></i>
-            Añadir Comida
+            Añadir Receta
         </button></a>
 
 </div>
@@ -53,57 +53,34 @@
                         Calorias
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Proteina
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Carbohidratos
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Grasa
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Azucar
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Sodio
+                        Porciones
                     </th>
                 </tr>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach ($foods as $food)
+                @foreach ($recipes as $recipe)
                 <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
 
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{$food->name}}
+                        {{$recipe->name}}
                     </th>
 
                     <td class="py-4 px-6">
-                        {{$food->calories}} cal
+                        {{$recipe->calories}} cal
                     </td>
+                   
                     <td class="py-4 px-6">
-                        {{$food->protein}}g
-                    </td>
-                    <td class="py-4 px-6">
-                        {{$food->carbs}}g
-                    </td>
-                    <td class="py-4 px-6">
-                        {{$food->fat}}g
-                    </td>
-                    <td class="py-4 px-6">
-                        {{$food->sugar}}g
-                    </td>
-                    <td class="py-4 px-6">
-                        {{$food->sodium}}g
+                        {{$recipe->servings}}g
                     </td>
                     <td class="flex  py-3 px-6 space-x-4">
-                        <a href="{{route('food.edit',$food)}}"
+                        <a href="{{route('recipes.edit',$recipe)}}"
                             class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
 
-                        <form action="{{route('food.destroy',$food)}}" method="POST">
+                        <form action="{{route('recipes.destroy',$recipe)}}" method="POST">
 
                             @method('delete')
                             @csrf

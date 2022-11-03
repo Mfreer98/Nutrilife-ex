@@ -19,4 +19,4 @@ class Recipe extends Model
         'notes',
     ];
 
-    
+}

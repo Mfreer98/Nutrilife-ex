@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FoodController;
-
+use App\Http\Controllers\RecipesController;
 /*
  |--------------------------------------------------------------------------
  | Web Routes
@@ -99,6 +99,7 @@ Route::middleware([
 
         Route::resource('admin/users', UserController::class)->names('roles.admin.users');
         Route::resource('food', FoodController::class)->names('food');
+        Route::resource('recipes', RecipesController::class)->names('recipes');
     });
 
 

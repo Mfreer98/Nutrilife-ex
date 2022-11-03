@@ -333,7 +333,7 @@ return [
         [
             'text' => 'Recipes',
             'icon' => 'fas fa-fw fa-utensils',
-            'url' => '#',
+            'route' => 'recipes.index',
         ],
         [
             'text' => 'Charts',
