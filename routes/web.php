@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\RecipesController;
+use App\Http\Controllers\EventController;
+
 /*
  |--------------------------------------------------------------------------
  | Web Routes
@@ -15,9 +17,11 @@ use App\Http\Controllers\RecipesController;
  |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/', function () {
+        return view('welcome');
+    }
+);
 
 // Route::middleware([
 //     'auth:sanctum',
@@ -41,71 +45,86 @@ Route::get('/', function () {
 //     })->name('dashboard');
 // });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
+Route::middleware(
+    [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ]
+)->group(
+        function () {
+            Route::get(
+                '/dashboard', function () {
+                            if (auth()->user()->role_id == 1) {
+                                return view('roles.admin.index');
+                            } else {
+                                if (auth()->user()->role_id == 2) {
+                                    return view('roles.paciente.index');
+                                } else {
+                                    if (auth()->user()->role_id == 3) {
+                                        return view('roles.nutricionista.index');
+                                    }
+                                }
+                            }
+                        }
+            )->name(
+                    'dashboard'
+                );
 
-])->group(function () {
-    Route::get('/dashboard', function () {
-            if (auth()->user()->role_id == 1) {
-                return view('roles.admin.index');
-            }
-            else {
-                if (auth()->user()->role_id == 2) {
-                    return view('roles.paciente.index');
-                }
-                else {
-                    if (auth()->user()->role_id == 3) {
-                        return view('roles.nutricionista.index');
-                    }
-                }
-            }
+            Route::get(
+                '/subscription', function () {
+                            if (auth()->user()->role_id == 3) {
+                                return view('roles.nutricionista.subscription');
+                            } else {
+                                return '403';
+                            }
+                        }
+            )->name(
+                    'subscription'
+                );
+
+            Route::get(
+                '/chat', function () {
+                            if (auth()->user()->role_id == 3 || auth()->user()->role_id == 2 || auth()->user()->role_id == 1) {
+                                return redirect('/chatify');
+                            } else {
+                                return 'FORBIDDEN';
+                            }
+                        }
+            )->name(
+                    'chat'
+                );
+
+            Route::get(
+                '/dashboard/charts', function () {
+                            if (auth()->user()->role_id == 1) {
+                                return view('roles.admin.charts');
+                            } else {
+                                return 'FORBIDDEN';
+                            }
+                        }
+            )->name(
+                    'dashboard.charts'
+                );
+
+
+
+
+            Route::resource('admin/users', UserController::class)->names('roles.admin.users');
+            Route::resource('food', FoodController::class)->names('food');
+            Route::resource('recipes', RecipesController::class)->names('recipes');
+            Route::resource('events', EventController::class)->names('roles.nutricionista.events');
         }
-        )->name('dashboard');
-
-        Route::get('/subscription', function () {
-            if (auth()->user()->role_id == 3) {
-                return view('roles.nutricionista.subscription');
-            }
-            else {
-                return '403';
-            }
-        }
-        )->name('subscription');
-
-        Route::get('/chat', function () {
-            if (auth()->user()->role_id == 3 || auth()->user()->role_id == 2 || auth()->user()->role_id == 1) {
-                return redirect('/chatify');
-            }
-            else {
-                return 'FORBIDDEN';
-            }
-        }
-        )->name('chat');
-
-        Route::get('/dashboard/charts', function () {
-            if (auth()->user()->role_id == 1) {
-                return view('roles.admin.charts');
-            }
-            else {
-                return 'FORBIDDEN';
-            }
-        }
-        )->name('dashboard.charts');
+    );
 
 
-
-
-        Route::resource('admin/users', UserController::class)->names('roles.admin.users');
-        Route::resource('food', FoodController::class)->names('food');
-        Route::resource('recipes', RecipesController::class)->names('recipes');
-    });
-
-
-Route::get('/registernutri', function () {
-    return view('auth.registernutri');
-})->name('registerNutri');
+Route::get(
+    '/registernutri', function () {
+        return view('auth.registernutri');
+    }
+)->name(
+        'registerNutri'
+    );
 
 
 // Route::group(['middleware'=> 'auth'], function(){

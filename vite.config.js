@@ -13,5 +13,11 @@ export default defineConfig({
                 'app/Http/Livewire/**',
             ],
         }),
+        
     ],
+    resolve: {
+            alias: {
+                '$': 'jQuery'
+            },
+    },
 });
