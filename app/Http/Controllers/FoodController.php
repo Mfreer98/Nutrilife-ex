@@ -17,13 +17,20 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
-        if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
-            $foods = Food::all();
+        $foods = Food::paginate(4);
+
+        //$foods = DB::table('food')->paginate();
+        //$foods = Food::all();
+        if (auth()->user()->role_id == 1 ) {
+            
             return view('food.index', compact('foods'));
-        } else {
+        } elseif(auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
+            return view('food.display', compact('foods'));
+        }
+        else{
             return '<h5>FORBIDDEN</h5>';
         }
+
     }
 
     /**
@@ -80,10 +87,14 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Food $food)
+    public function show(Request $request)
     {
-        //
-        return "troleado";
+        if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
+            $query = $request->get('query');
+            $query = str_replace("", "%", $query);
+            $foods = Food::where('name', 'like', '%'.$query.'%')->paginate(4);
+            return view('food.display', compact('foods'));
+        }
     }
 
     /**
@@ -132,9 +143,13 @@ class FoodController extends Controller
         return redirect()->route('food.index')->with('message', 'El usuario fue editado con exito!');
     }
 
-    private function storeImage(Request $request)
+    public function search(Request $request)
     {
-
-
+        if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
+            $query = $request->get('query');
+            $query = str_replace("", "%", $query);
+            $foods = Food::where('name', 'like', '%'.$query.'%');
+            return view('food.display', compact('foods'));
+        }
     }
 }

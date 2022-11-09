@@ -10,12 +10,20 @@ class RecipesController extends Controller
     public function index()
     {
         //
-        if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
-            $recipes = Recipe::all();
+        $recipes = Recipes::paginate(4);
+
+        //$foods = DB::table('food')->paginate();
+        //$foods = Food::all();
+        if (auth()->user()->role_id == 1 ) {
+            
             return view('recipes.index', compact('recipes'));
-        } else {
+        } elseif(auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
+            return view('recipes.display', compact('recipes'));
+        }
+        else{
             return '<h5>FORBIDDEN</h5>';
         }
+
     }
 
     /**
