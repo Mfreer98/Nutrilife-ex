@@ -15,9 +15,5 @@ export default defineConfig({
         }),
         
     ],
-    resolve: {
-            alias: {
-                '$': 'jQuery'
-            },
-    },
+    
 });
