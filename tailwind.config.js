@@ -18,5 +18,9 @@ module.exports = {
         },
     },
 
+    variants: {
+        opacity: ({ after }) => after(['disabled'])
+      },
+      
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'),require('flowbite/plugin')],
 };

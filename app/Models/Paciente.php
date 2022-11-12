@@ -11,7 +11,6 @@ class Paciente extends Model
 
     protected $fillable=[
         'height',
-        'age',
         'birthday',
         'weight',
         'waist_hip_relationship',

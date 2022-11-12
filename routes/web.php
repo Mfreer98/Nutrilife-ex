@@ -111,6 +111,8 @@ Route::middleware(
 
 
             Route::resource('admin/users', UserController::class)->names('roles.admin.users');
+            Route::get('food/search',[FoodController::class,'search'])->name('food.search');
+            Route::get('recipe/search',[RecipesController::class,'search'])->name('recipes.search');
             Route::resource('food', FoodController::class)->names('food');
             Route::resource('recipes', RecipesController::class)->names('recipes');
             Route::resource('events', EventController::class)->names('roles.nutricionista.events');

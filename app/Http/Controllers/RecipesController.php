@@ -9,8 +9,8 @@ class RecipesController extends Controller
 {
     public function index()
     {
-        //
-        $recipes = Recipes::paginate(4);
+        
+        $recipes = Recipe::paginate(4);
 
         //$foods = DB::table('food')->paginate();
         //$foods = Food::all();
@@ -60,7 +60,7 @@ class RecipesController extends Controller
             $file = "Imagen nula";
         }
 
-        $recipes = Recipes::create([
+        $recipes = Recipe::create([
             'img' => $filename,
             'name' => $request->name,
             'calories' => $request->calories,
@@ -99,6 +99,19 @@ class RecipesController extends Controller
             return view('recipes.edit', compact('recipe'));
         } else {
             return '<h5>FORBIDDEN</h5>';
+        }
+    }
+
+
+    public function search(Request $request)
+    {
+
+        
+        if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
+            $query = $request->get('query');
+            $query = str_replace("", "%", $query);
+            $foods = Recipe::where('name', 'like', '%'.$query.'%')->paginate(4);
+            return view('recipes.display', compact('recipes'));
         }
     }
 

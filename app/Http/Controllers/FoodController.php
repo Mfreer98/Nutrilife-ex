@@ -78,7 +78,7 @@ class FoodController extends Controller
             'sodium' => $request->sodium,
             'is_active' => 1,
         ]);
-        return redirect()->route('food.index');
+        return redirect()->route('food.index')->with('message', 'El usuario fue editado con exito!');
     }
 
     /**
@@ -87,8 +87,10 @@ class FoodController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function search(Request $request)
     {
+
+        
         if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
             $query = $request->get('query');
             $query = str_replace("", "%", $query);
@@ -143,13 +145,4 @@ class FoodController extends Controller
         return redirect()->route('food.index')->with('message', 'El usuario fue editado con exito!');
     }
 
-    public function search(Request $request)
-    {
-        if (auth()->user()->role_id == 2 || auth()->user()->role_id == 3) {
-            $query = $request->get('query');
-            $query = str_replace("", "%", $query);
-            $foods = Food::where('name', 'like', '%'.$query.'%');
-            return view('food.display', compact('foods'));
-        }
-    }
 }

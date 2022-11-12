@@ -10,7 +10,10 @@ use App\Models\Paciente;
 class Nutricionista extends Model
 {
     use HasFactory;
-    
+    protected $fillable=[
+        'tel'
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class);
