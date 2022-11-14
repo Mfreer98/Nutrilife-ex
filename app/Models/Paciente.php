@@ -9,7 +9,7 @@ class Paciente extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
+    protected $fillable = [
         'height',
         'birthday',
         'weight',
@@ -18,10 +18,9 @@ class Paciente extends Model
         'body_fat',
         'body_mass',
     ];
-    public function user()
-    {
-        return $this->hasOne(User::class);
-    }
 
-    
+    public function nutricionista()
+    {
+        return $this->belongsTo(Nutricionista::class);
+    }
 }

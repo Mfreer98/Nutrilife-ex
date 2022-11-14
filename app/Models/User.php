@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
- 
-    
+
+
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -63,4 +63,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function role()
+    {
+        if ($this->attributes['role_id'] == 2) {
+            return $this->hasOne(Paciente::class);
+        } elseif ($this->attributes['role_id'] == 3) {
+            return $this->hasOne(Nutricionista::class);
+        } else {
+            return null;
+        }
+    }
 }
