@@ -2,21 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\RecipesController;
+use App\Http\Controllers\EventController;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+ |--------------------------------------------------------------------------
+ | Web Routes
+ |--------------------------------------------------------------------------
+ |
+ | Here is where you can register web routes for your application. These
+ | routes are loaded by the RouteServiceProvider within a group which
+ | contains the "web" middleware group. Now create something great!
+ |
+ */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get(
+    '/',
+    function () {
+        return view('welcome');
+    }
+);
 
 // Route::middleware([
 //     'auth:sanctum',
@@ -40,55 +46,106 @@ Route::get('/', function () {
 //     })->name('dashboard');
 // });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-    
-])->group(function () {
-    Route::get('/dashboard', function () {
-        if (auth()->user()->role_id == 1) {
-            return view('roles.admin.index');
-        }else {
-            if (auth()->user()->role_id == 2) {
-                return view('roles.paciente.index');
-            }else {
-                if (auth()->user()->role_id == 3) {
-                    return view('roles.nutricionista.index');
+Route::middleware(
+    [
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+    ]
+)->group(
+    function () {
+        Route::get(
+            '/dashboard',
+            function () {
+                if (auth()->user()->role_id == 1) {
+                    return view('roles.admin.index');
+                } else {
+                    if (auth()->user()->role_id == 2) {
+                        return view('roles.paciente.index');
+                    } else {
+                        if (auth()->user()->role_id == 3) {
+                            return view('roles.nutricionista.index');
+                        }
+                    }
                 }
             }
-        }
-    })->name('dashboard');
+        )->name(
+            'dashboard'
+        );
 
-    Route::get('/subscription', function () {
-        if (auth()->user()->role_id == 3) {
-            return view('roles.nutricionista.subscription');
-        }
-        else{
-            return '403';
-        }
-    })->name('subscription');
+        Route::get(
+            '/subscription',
+            function () {
+                if (auth()->user()->role_id == 3) {
+                    return view('roles.nutricionista.subscription');
+                } else {
+                    return '403';
+                }
+            }
+        )->name(
+            'subscription'
+        );
 
-    Route::get('/chat',function(){
-        if(auth()->user()->role_id == 3 ||auth()->user()->role_id == 2||auth()->user()->role_id == 1){
-            return redirect('/chatify');
-        }
-        else{
-            return 'FORBIDDEN';
-        }
-    })->name('chat');
+        Route::get(
+            '/pacientes',
+            function () {
+                if (auth()->user()->role_id == 3) {
+                    return view('roles.nutricionista.pacientes.index');
+                } else {
+                    return '403';
+                }
+            }
+        )->name(
+            'pacientes'
+        );
 
-    
-    
+        Route::get(
+            '/chat',
+            function () {
+                if (auth()->user()->role_id == 3 || auth()->user()->role_id == 2 || auth()->user()->role_id == 1) {
+                    return redirect('/chatify');
+                } else {
+                    return 'FORBIDDEN';
+                }
+            }
+        )->name(
+            'chat'
+        );
 
-    Route::resource('admin/users', UserController::class)->names('roles.admin.users');
-    
-});
+        Route::get(
+            '/dashboard/charts',
+            function () {
+                if (auth()->user()->role_id == 1) {
+                    return view('roles.admin.charts');
+                } else {
+                    return 'FORBIDDEN';
+                }
+            }
+        )->name(
+            'dashboard.charts'
+        );
 
 
-Route::get('/registernutri', function () {
-    return view('auth.registernutri');
-})->name('registerNutri');
+
+
+        Route::resource('admin/users', UserController::class)->names('roles.admin.users');
+        Route::get('food/search', [FoodController::class, 'search'])->name('food.search');
+        Route::get('recipe/search', [RecipesController::class, 'search'])->name('recipes.search');
+        Route::resource('food', FoodController::class)->names('food');
+        Route::resource('recipes', RecipesController::class)->names('recipes');
+        Route::resource('events', EventController::class)->names('roles.nutricionista.events');
+    }
+);
+
+
+Route::get(
+    '/registernutri',
+    function () {
+        return view('auth.registernutri');
+    }
+)->name(
+    'registerNutri'
+);
 
 
 // Route::group(['middleware'=> 'auth'], function(){

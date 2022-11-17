@@ -12,7 +12,7 @@
 @section('title', 'Users')
 
 @section('content_header')
-    <h1>Users</h1>
+    <h1>Food</h1>
 @stop
 
 @section('content')

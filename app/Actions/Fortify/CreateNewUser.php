@@ -3,6 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Paciente;
+use App\Models\Nutricionista;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -27,11 +29,28 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        $email = $input['email'];
+
+        $user = new User([
             'name' => $input['name'],
-            'email' => $input['email'],
+            'email' => $email,
             'password' => Hash::make($input['password']),
             'role_id' => $input['role'],
         ]);
+
+
+        if ($input['role'] == 2) {
+
+            $paciente = new Paciente();
+            $paciente->birthday = $input['birthday'];
+            $user->save();
+            $user->role()->save($paciente);
+        } elseif ($input['role'] == 3) {
+            $nutricionista = new Nutricionista();
+            $nutricionista->tel = $input['tel'];
+            $user->save();
+            $user->role()->save($nutricionista);
+        }
+        return $user;
     }
 }
